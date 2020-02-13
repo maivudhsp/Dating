@@ -27,10 +27,8 @@ namespace DatingApp.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataContext>(options => options.UseSqlite(Configuration.GetConnectionString("connection")));
             services.AddControllers();
-            services.AddDbContext<DataContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,12 +38,8 @@ namespace DatingApp.API
             {
                 app.UseDeveloperExceptionPage();
             }
-            else{
-                //app.UseHsts();
-            }
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            //app.UseMvc();
-            //app.UseHttpsRedirection();
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -55,7 +49,6 @@ namespace DatingApp.API
             {
                 endpoints.MapControllers();
             });
-            
         }
     }
 }

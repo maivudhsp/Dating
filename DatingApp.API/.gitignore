@@ -1,4 +1,4 @@
-.VSCODE
+vscode
 bin
 obj
-*.db
+DatingApp.db
